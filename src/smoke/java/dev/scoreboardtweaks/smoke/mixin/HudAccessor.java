@@ -1,4 +1,4 @@
-package dev.scoreboardtweaks.smoke;
+package dev.scoreboardtweaks.smoke.mixin;
 
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;

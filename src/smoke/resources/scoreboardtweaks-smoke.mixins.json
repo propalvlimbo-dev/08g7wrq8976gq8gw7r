@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "dev.scoreboardtweaks.smoke",
+  "package": "dev.scoreboardtweaks.smoke.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": ["HudAccessor"],
   "injectors": {"defaultRequire": 1}

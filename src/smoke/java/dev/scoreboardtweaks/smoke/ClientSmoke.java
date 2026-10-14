@@ -1,6 +1,7 @@
 package dev.scoreboardtweaks.smoke;
 
 import dev.scoreboardtweaks.ScoreboardTweaks;
+import dev.scoreboardtweaks.smoke.mixin.HudAccessor;
 import dev.scoreboardtweaks.config.ModConfig;
 import dev.scoreboardtweaks.gui.SettingsScreen;
 import dev.scoreboardtweaks.gui.SidebarRenderer;

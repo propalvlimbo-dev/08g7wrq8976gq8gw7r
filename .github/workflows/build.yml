@@ -1,4 +1,7 @@
 name: Build Fabric 1.21.4 mod
+concurrency:
+  group: scoreboard-build-${{ github.ref }}
+  cancel-in-progress: true
 on:
   push:
     branches: [arena/d7c6e662-08g7wrq8976gq8gw7r]
@@ -16,7 +19,9 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v5
+        with:
+          cache-read-only: false
       - name: Compile, test and remap for Fabric
         run: ./gradlew --no-daemon build
       - name: Start actual Minecraft client under virtual display
