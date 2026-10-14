@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "scoreboardtweaks",
+  "version": "${version}",
+  "name": "Scoreboard Tweaks",
+  "description": "Drag the sidebar in chat, customize its background, and hide score numbers. Click the sidebar or press Ctrl+K in chat for settings.",
+  "authors": ["Scoreboard Tweaks contributors"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": { "client": ["dev.scoreboardtweaks.ScoreboardTweaks"] },
+  "mixins": ["scoreboardtweaks.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "1.21.4",
+    "java": ">=21"
+  }
+}

@@ -1,0 +1,93 @@
+package dev.scoreboardtweaks.gui;
+
+import dev.scoreboardtweaks.ScoreboardTweaks;
+import dev.scoreboardtweaks.core.DragGesture;
+import dev.scoreboardtweaks.core.Layout;
+import dev.scoreboardtweaks.mixin.ChatScreenAccessor;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.text.Text;
+
+public final class SidebarInteraction {
+    private static final DragGesture GESTURE = new DragGesture();
+    private SidebarInteraction() {}
+
+    public static void checkScreen() {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (!(client.currentScreen instanceof ChatScreen) || client.world == null || client.options.hudHidden) {
+            if (GESTURE.isDragging()) ScoreboardTweaks.save();
+            GESTURE.cancel();
+        }
+    }
+
+    public static boolean button(int button, int action) {
+        checkScreen();
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (!(client.currentScreen instanceof ChatScreen) || button != 0 || client.world == null || client.options.hudHidden) return false;
+        double x = mouseX(), y = mouseY();
+        if (action == 1) return GESTURE.press(x, y, SidebarRenderer.bounds());
+        if (action == 0 && GESTURE.isPressed()) {
+            move(x, y); // Include any movement between the last cursor event and release.
+            DragGesture.Release released = GESTURE.release(x, y);
+            if (released == DragGesture.Release.DRAG) ScoreboardTweaks.save();
+            else if (released == DragGesture.Release.CLICK) openSettings();
+            return true;
+        }
+        return false;
+    }
+
+    public static void cursorMoved() {
+        checkScreen();
+        if (GESTURE.isPressed()) move(mouseX(), mouseY());
+    }
+
+    private static void move(double x, double y) {
+        if (!GESTURE.move(x, y)) return;
+        Layout.Bounds bounds = SidebarRenderer.bounds();
+        if (bounds == null) return;
+        var window = MinecraftClient.getInstance().getWindow();
+        var config = ScoreboardTweaks.config();
+        config.customPosition = true;
+        config.anchorX = Layout.toAnchor(GESTURE.left(x), bounds.width(), window.getScaledWidth());
+        config.anchorY = Layout.toAnchor(GESTURE.top(y), bounds.height(), window.getScaledHeight());
+    }
+
+    private static double mouseX() {
+        MinecraftClient client = MinecraftClient.getInstance();
+        return client.mouse.getX() * client.getWindow().getScaledWidth() / client.getWindow().getWidth();
+    }
+    private static double mouseY() {
+        MinecraftClient client = MinecraftClient.getInstance();
+        return client.mouse.getY() * client.getWindow().getScaledHeight() / client.getWindow().getHeight();
+    }
+
+    public static void openSettings() {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (GESTURE.isDragging()) ScoreboardTweaks.save();
+        GESTURE.cancel();
+        Screen parent = client.currentScreen;
+        if (parent instanceof ChatScreen) {
+            String draft = ((ChatScreenAccessor) parent).scoreboardtweaks$getChatField().getText();
+            parent = new ChatScreen(draft);
+        }
+        client.setScreen(new SettingsScreen(parent));
+    }
+
+    public static void renderChatOverlay(DrawContext context, int mouseX, int mouseY) {
+        Layout.Bounds bounds = SidebarRenderer.bounds();
+        if (bounds == null || (!bounds.contains(mouseX, mouseY) && !GESTURE.isPressed())) return;
+        int color = GESTURE.isDragging() ? 0xFF55EFC4 : 0xFF77BBFF;
+        int x = bounds.x(), y = bounds.y(), right = x + bounds.width(), bottom = y + bounds.height();
+        context.fill(x, y, right, y + 1, color);
+        context.fill(x, bottom - 1, right, bottom, color);
+        context.fill(x, y, x + 1, bottom, color);
+        context.fill(right - 1, y, right, bottom, color);
+        MinecraftClient client = MinecraftClient.getInstance();
+        Text hint = Text.translatable("scoreboardtweaks.drag_hint");
+        int hintX = Math.max(2, Math.min(x, client.getWindow().getScaledWidth() - client.textRenderer.getWidth(hint) - 2));
+        int hintY = y >= 13 ? y - 12 : Math.min(bottom + 3, client.getWindow().getScaledHeight() - 22);
+        context.drawTextWithShadow(client.textRenderer, hint, hintX, hintY, color);
+    }
+}
