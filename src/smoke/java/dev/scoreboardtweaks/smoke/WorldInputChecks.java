@@ -97,19 +97,16 @@ public final class WorldInputChecks {
                     client.currentScreen.keyPressed(GLFW.GLFW_KEY_K, 0, GLFW.GLFW_MOD_CONTROL);
                     require(client.currentScreen instanceof SettingsScreen, "Ctrl+K fallback");
                     client.currentScreen.close();
-                    ButtonWidget settings = client.currentScreen.children().stream()
-                        .filter(e -> e instanceof ButtonWidget).map(e -> (ButtonWidget)e)
-                        .filter(b -> b.getMessage().getString().equals(Text.translatable("scoreboardtweaks.open_settings").getString()))
-                        .findFirst().orElseThrow(() -> new AssertionError("Visible settings button missing"));
-                    client.currentScreen.mouseClicked(settings.getX() + 3, settings.getY() + 3, 0);
+                    client.currentScreen.mouseClicked(client.currentScreen.width - 100, 10, 0);
                     require(client.currentScreen instanceof SettingsScreen, "visible fallback button opens settings");
                     client.currentScreen.close();
                     // Continue with palette, scaling and click-to-place checks outside the render thread.
                     return null;
                 });
                 FeatureChecks.run(client);
+                RegressionChecks.run(client);
                 on(client, () -> {
-                    System.out.println("SCOREBOARD_SMOKE_PASS: real-world Mouse click/drag, GUI scales 2/3, board scales 50/100/150/200, palette/HEX, size slider, click-to-place, save/reload");
+                    System.out.println("SCOREBOARD_SMOKE_PASS: real-world Mouse click/drag, GUI scales 2/3, board scales 50/100/150/200, palette/HEX, live pixel preview, no Move button, invisible target, chat Up/Down history, save/reload");
                     client.scheduleStop();
                     return null;
                 });

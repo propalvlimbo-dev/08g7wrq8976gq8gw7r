@@ -4,6 +4,7 @@ import dev.scoreboardtweaks.ScoreboardTweaks;
 import dev.scoreboardtweaks.config.ModConfig;
 import dev.scoreboardtweaks.core.ColorMath;
 import dev.scoreboardtweaks.core.Layout;
+import dev.scoreboardtweaks.core.EditorLayout;
 import dev.scoreboardtweaks.gui.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
@@ -60,13 +61,14 @@ public final class FeatureChecks {
         Thread.sleep(250); // Exercise real palette rendering, not just its math.
         on(client, () -> {
             require(client.currentScreen instanceof ColorPickerScreen, "color sample opens palette");
-            int left = (client.currentScreen.width - 300) / 2, top = (client.currentScreen.height - 232) / 2;
+            var panel = EditorLayout.of(client.currentScreen.width, client.currentScreen.height).panel();
+            int left = panel.x(), top = panel.y(), svWidth = panel.width() - 70, hueLeft = left + panel.width() - 40;
             var screen = client.currentScreen;
-            screen.mouseClicked(left + 270, top + 32 + 0.5 * 131, 0);
-            screen.mouseReleased(left + 270, top + 32 + 0.5 * 131, 0);
+            screen.mouseClicked(hueLeft + 10, top + 32 + 0.5 * 131, 0);
+            screen.mouseReleased(hueLeft + 10, top + 32 + 0.5 * 131, 0);
             screen.mouseClicked(left + 12, top + 32, 0);
-            screen.mouseDragged(left + 12 + 0.75 * 229, top + 32 + 0.2 * 131, 0, 0, 0);
-            screen.mouseReleased(left + 12 + 0.75 * 229, top + 32 + 0.2 * 131, 0);
+            screen.mouseDragged(left + 12 + 0.75 * (svWidth - 1), top + 32 + 0.2 * 131, 0, 0, 0);
+            screen.mouseReleased(left + 12 + 0.75 * (svWidth - 1), top + 32 + 0.2 * 131, 0);
             require(ScoreboardTweaks.config().backgroundRgb == ColorMath.rgb(0.5, 0.75, 0.8), "HSV pick matches preview/HEX");
             screen.close();
             pressButton(client, "scoreboardtweaks.color");
@@ -81,31 +83,12 @@ public final class FeatureChecks {
             client.currentScreen.mouseClicked(sx, slider.getY() + 10, 0);
             client.currentScreen.mouseReleased(sx, slider.getY() + 10, 0);
             require(Math.abs(ScoreboardTweaks.config().scale - 1) < 0.02, "size slider updates scale");
-            ScoreboardTweaks.config().resetPosition();
-            pressButton(client, "scoreboardtweaks.move");
-            require(client.currentScreen instanceof PositionScreen, "explicit move mode opens");
-            return null;
-        });
-        Thread.sleep(250);
-        Layout.Bounds bounds = on(client, SidebarRenderer::bounds);
-        cursor(client, 100, 100); // Destination is not the sidebar's old location.
-        button(client, GLFW.GLFW_PRESS);
-        Thread.sleep(150);
-        cursor(client, 140, 130);
-        Thread.sleep(200);
-        button(client, GLFW.GLFW_RELEASE);
-        Thread.sleep(200);
-        on(client, () -> {
-            var moved = SidebarRenderer.bounds();
-            require(Math.abs(moved.x() - (140 - bounds.width() / 2.0)) <= 2
-                && Math.abs(moved.y() - (130 - bounds.height() / 2.0)) <= 2, "click-to-place + drag without targeting old board");
-            client.currentScreen.close();
             var path = Files.createTempDirectory("scoreboard-features").resolve("config.json");
             require(ScoreboardTweaks.config().save(path), "save features");
             var loaded = ModConfig.load(path);
             require(loaded.scale == ScoreboardTweaks.config().scale && loaded.backgroundRgb == ScoreboardTweaks.config().backgroundRgb
                 && loaded.customPosition, "color, scale, position persist together");
-            System.out.println("FEATURE_PASS: palette apply/cancel, size slider, destination placement and save/reload");
+            System.out.println("FEATURE_PASS: palette apply/cancel, size slider, save/reload");
             return null;
         });
     }

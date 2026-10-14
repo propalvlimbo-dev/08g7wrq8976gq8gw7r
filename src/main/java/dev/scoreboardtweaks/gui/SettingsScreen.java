@@ -1,6 +1,7 @@
 package dev.scoreboardtweaks.gui;
 
 import dev.scoreboardtweaks.ScoreboardTweaks;
+import dev.scoreboardtweaks.core.EditorLayout;
 import dev.scoreboardtweaks.core.Layout;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -12,25 +13,27 @@ import java.util.Locale;
 
 public final class SettingsScreen extends Screen {
     private final Screen parent;
-    private int left, top;
+    private EditorLayout layout;
+    private int left, top, panelWidth;
     public SettingsScreen(Screen parent) {
         super(Text.translatable("scoreboardtweaks.title"));
         this.parent = parent;
     }
     @Override protected void init() {
-        left = (width - 300) / 2;
-        top = (height - 228) / 2;
+        layout = EditorLayout.of(width, height);
+        left = layout.panel().x(); top = layout.panel().y(); panelWidth = layout.panel().width();
+        int controlWidth = panelWidth - 24, half = (controlWidth - 4) / 2;
         addDrawableChild(ButtonWidget.builder(numbersLabel(), b -> {
             ScoreboardTweaks.config().hideNumbers = !ScoreboardTweaks.config().hideNumbers;
             b.setMessage(numbersLabel());
-        }).dimensions(left + 12, top + 32, 136, 20).build());
+        }).dimensions(left + 12, top + 32, half, 20).build());
         addDrawableChild(ButtonWidget.builder(backgroundLabel(), b -> {
             ScoreboardTweaks.config().backgroundEnabled = !ScoreboardTweaks.config().backgroundEnabled;
             b.setMessage(backgroundLabel());
-        }).dimensions(left + 152, top + 32, 136, 20).build());
+        }).dimensions(left + 16 + half, top + 32, half, 20).build());
         addDrawableChild(ButtonWidget.builder(Text.translatable("scoreboardtweaks.color"), b ->
-            client.setScreen(new ColorPickerScreen(this))).dimensions(left + 12, top + 58, 136, 20).build());
-        TextFieldWidget hex = new TextFieldWidget(textRenderer, left + 164, top + 59, 124, 18,
+            client.setScreen(new ColorPickerScreen(this))).dimensions(left + 12, top + 58, half, 20).build());
+        TextFieldWidget hex = new TextFieldWidget(textRenderer, left + 16 + half, top + 59, half, 18,
             Text.translatable("scoreboardtweaks.hex"));
         hex.setMaxLength(7);
         hex.setText(String.format(Locale.ROOT, "#%06X", ScoreboardTweaks.config().backgroundRgb));
@@ -40,17 +43,15 @@ public final class SettingsScreen extends Screen {
             if (valid) ScoreboardTweaks.config().backgroundRgb = Integer.parseInt(value.replace("#", ""), 16);
         });
         addDrawableChild(hex);
-        addDrawableChild(new OpacitySlider(left + 12, top + 84));
-        addDrawableChild(new ScaleSlider(left + 12, top + 110));
-        addDrawableChild(ButtonWidget.builder(Text.translatable("scoreboardtweaks.move"), b ->
-            client.setScreen(new PositionScreen(this))).dimensions(left + 12, top + 136, 276, 20).build());
+        addDrawableChild(new OpacitySlider(left + 12, top + 84, controlWidth));
+        addDrawableChild(new ScaleSlider(left + 12, top + 110, controlWidth));
         addDrawableChild(ButtonWidget.builder(Text.translatable("scoreboardtweaks.reset_position"), b ->
-            ScoreboardTweaks.config().resetPosition()).dimensions(left + 12, top + 162, 136, 20).build());
+            ScoreboardTweaks.config().resetPosition()).dimensions(left + 12, top + 140, controlWidth, 20).build());
         addDrawableChild(ButtonWidget.builder(Text.translatable("scoreboardtweaks.reset_all"), b -> {
             ScoreboardTweaks.reset(); clearAndInit();
-        }).dimensions(left + 152, top + 162, 136, 20).build());
+        }).dimensions(left + 12, top + 164, controlWidth, 20).build());
         addDrawableChild(ButtonWidget.builder(Text.translatable("gui.done"), b -> close())
-            .dimensions(left + 12, top + 202, 276, 20).build());
+            .dimensions(left + 12, top + 206, controlWidth, 20).build());
     }
     private Text numbersLabel() {
         return Text.translatable("scoreboardtweaks.numbers_short", Text.translatable(
@@ -61,12 +62,14 @@ public final class SettingsScreen extends Screen {
             ScoreboardTweaks.config().backgroundEnabled ? "options.on" : "options.off"));
     }
     @Override public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        context.fill(left, top, left + 300, top + 228, 0xF51B202B);
-        context.fill(left, top, left + 300, top + 2, 0xFF77BBFF);
-        context.drawCenteredTextWithShadow(textRenderer, title, width / 2, top + 11, 0xFFFFFFFF);
-        context.drawCenteredTextWithShadow(textRenderer, Text.translatable("scoreboardtweaks.live_hint"), width / 2, top + 188, 0xFFADBACC);
+        context.fill(left, top, left + panelWidth, top + 232, 0xF51B202B);
+        context.drawCenteredTextWithShadow(textRenderer, title, left + panelWidth / 2, top + 11, 0xFFFFFFFF);
+        context.drawCenteredTextWithShadow(textRenderer, Text.translatable("scoreboardtweaks.live_hint"), left + panelWidth / 2, top + 192, 0xFFADBACC);
         super.render(context, mouseX, mouseY, delta);
-        context.fill(left + 128, top + 62, left + 142, top + 74, 0xFF000000 | ScoreboardTweaks.config().backgroundRgb);
+        int half = (panelWidth - 28) / 2;
+        context.fill(left + half - 5, top + 62, left + half + 7, top + 74, 0xFF000000 | ScoreboardTweaks.config().backgroundRgb);
+        // Separate preview column; never covered by controls or the vanilla HUD layers.
+        SidebarRenderer.renderPreview(context, layout);
     }
     @Override public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {}
     @Override public boolean shouldPause() { return false; }
@@ -74,8 +77,8 @@ public final class SettingsScreen extends Screen {
     @Override public void removed() { ScoreboardTweaks.save(); }
 
     private static final class OpacitySlider extends SliderWidget {
-        OpacitySlider(int x, int y) {
-            super(x, y, 276, 20, Text.empty(), ScoreboardTweaks.config().backgroundOpacity / 255.0);
+        OpacitySlider(int x, int y, int width) {
+            super(x, y, width, 20, Text.empty(), ScoreboardTweaks.config().backgroundOpacity / 255.0);
             updateMessage();
         }
         @Override protected void updateMessage() {
@@ -84,8 +87,8 @@ public final class SettingsScreen extends Screen {
         @Override protected void applyValue() { ScoreboardTweaks.config().backgroundOpacity = (int)Math.round(value * 255); }
     }
     private static final class ScaleSlider extends SliderWidget {
-        ScaleSlider(int x, int y) {
-            super(x, y, 276, 20, Text.empty(), (Layout.scale(ScoreboardTweaks.config().scale) - 0.5) / 1.5);
+        ScaleSlider(int x, int y, int width) {
+            super(x, y, width, 20, Text.empty(), (Layout.scale(ScoreboardTweaks.config().scale) - 0.5) / 1.5);
             updateMessage();
         }
         @Override protected void updateMessage() {

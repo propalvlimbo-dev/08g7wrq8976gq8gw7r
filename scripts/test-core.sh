@@ -5,6 +5,7 @@ JAVAC="${JAVA_HOME:+$JAVA_HOME/bin/}javac"
 JAVA="${JAVA_HOME:+$JAVA_HOME/bin/}java"
 mkdir -p build/core-test
 "$JAVAC" --release 21 -d build/core-test \
+  src/main/java/dev/scoreboardtweaks/core/EditorLayout.java \
   src/main/java/dev/scoreboardtweaks/core/ColorMath.java \
   src/main/java/dev/scoreboardtweaks/core/Layout.java \
   src/main/java/dev/scoreboardtweaks/core/DragGesture.java \

@@ -1,7 +1,8 @@
 package dev.scoreboardtweaks.mixin;
 
 import dev.scoreboardtweaks.gui.SidebarRenderer;
-import dev.scoreboardtweaks.gui.PositionScreen;
+import dev.scoreboardtweaks.gui.SettingsScreen;
+import dev.scoreboardtweaks.gui.ColorPickerScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.DrawContext;
@@ -24,7 +25,9 @@ public abstract class InGameHudMixin {
         at = @At("HEAD"), cancellable = true)
     private void scoreboardtweaks$renderSidebar(DrawContext context, ScoreboardObjective objective, CallbackInfo ci) {
         var screen = MinecraftClient.getInstance().currentScreen;
-        if (!(screen instanceof ChatScreen) && !(screen instanceof PositionScreen)) SidebarRenderer.render(context, objective);
+        if (!(screen instanceof ChatScreen) && !(screen instanceof SettingsScreen) && !(screen instanceof ColorPickerScreen)) {
+            SidebarRenderer.render(context, objective);
+        }
         ci.cancel();
     }
 }

@@ -6,9 +6,7 @@ import dev.scoreboardtweaks.core.Layout;
 import dev.scoreboardtweaks.mixin.ChatScreenAccessor;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ChatScreen;
-import net.minecraft.text.Text;
 
 public final class SidebarInteraction {
     private static final DragGesture GESTURE = new DragGesture();
@@ -62,10 +60,6 @@ public final class SidebarInteraction {
         config.anchorY = Layout.toAnchor(GESTURE.top(y), bounds.height(), window.getScaledHeight());
     }
 
-    public static void openPosition() {
-        MinecraftClient.getInstance().setScreen(new PositionScreen(parentWithDraft()));
-    }
-
     public static void openSettings() {
         MinecraftClient.getInstance().setScreen(new SettingsScreen(parentWithDraft()));
     }
@@ -82,22 +76,4 @@ public final class SidebarInteraction {
         return parent;
     }
 
-    public static void renderChatOverlay(DrawContext context, int mouseX, int mouseY) {
-        Layout.Bounds bounds = SidebarRenderer.bounds();
-        if (bounds == null) return;
-        bounds = bounds.expanded(6);
-        boolean hovered = bounds.contains(mouseX, mouseY);
-        int color = GESTURE.isDragging() ? 0xFF55EFC4 : (hovered ? 0xFF77BBFF : 0x8877BBFF);
-        int x = bounds.x(), y = bounds.y(), right = x + bounds.width(), bottom = y + bounds.height();
-        context.fill(x, y, right, y + 1, color);
-        context.fill(x, bottom - 1, right, bottom, color);
-        context.fill(x, y, x + 1, bottom, color);
-        context.fill(right - 1, y, right, bottom, color);
-        if (!hovered && !GESTURE.isPressed()) return;
-        MinecraftClient client = MinecraftClient.getInstance();
-        Text hint = Text.translatable("scoreboardtweaks.drag_hint");
-        int hintX = Math.max(2, Math.min(x, client.getWindow().getScaledWidth() - client.textRenderer.getWidth(hint) - 2));
-        int hintY = y >= 13 ? y - 12 : Math.min(bottom + 3, client.getWindow().getScaledHeight() - 22);
-        context.drawTextWithShadow(client.textRenderer, hint, hintX, hintY, color);
-    }
 }

@@ -2,6 +2,7 @@ package dev.scoreboardtweaks.gui;
 
 import dev.scoreboardtweaks.ScoreboardTweaks;
 import dev.scoreboardtweaks.core.ColorMath;
+import dev.scoreboardtweaks.core.EditorLayout;
 import dev.scoreboardtweaks.core.Layout;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -17,7 +18,9 @@ public final class ColorPickerScreen extends Screen {
     private int left, top, dragTarget;
     private TextFieldWidget hex;
     private boolean updatingHex;
-    private static final int SV_WIDTH = 230, SV_HEIGHT = 132;
+    private static final int SV_HEIGHT = 132;
+    private EditorLayout layout;
+    private int panelWidth, svWidth, hueLeft;
     public ColorPickerScreen(Screen parent) {
         super(Text.translatable("scoreboardtweaks.palette"));
         this.parent = parent;
@@ -29,10 +32,12 @@ public final class ColorPickerScreen extends Screen {
         hue = hsv[0]; saturation = hsv[1]; value = hsv[2];
     }
     @Override protected void init() {
-        left = (width - 300) / 2;
-        top = (height - 232) / 2;
+        layout = EditorLayout.of(width, height);
+        left = layout.panel().x(); top = layout.panel().y(); panelWidth = layout.panel().width();
+        svWidth = panelWidth - 70;
+        hueLeft = left + panelWidth - 40;
         dragTarget = 0;
-        hex = new TextFieldWidget(textRenderer, left + 50, top + 176, 110, 18, Text.translatable("scoreboardtweaks.hex"));
+        hex = new TextFieldWidget(textRenderer, left + 42, top + 176, panelWidth - 134, 18, Text.translatable("scoreboardtweaks.hex"));
         hex.setMaxLength(7);
         hex.setText(String.format(Locale.ROOT, "#%06X", ScoreboardTweaks.config().backgroundRgb));
         hex.setChangedListener(text -> {
@@ -51,13 +56,13 @@ public final class ColorPickerScreen extends Screen {
             final int rgb = presets[i];
             addDrawableChild(ButtonWidget.builder(Text.literal(""), b -> {
                 loadColor(rgb); applyColor();
-            }).dimensions(left + 172 + i * 29, top + 175, 26, 20).build());
+            }).dimensions(left + panelWidth - 84 + i * 19, top + 175, 18, 20).build());
         }
         addDrawableChild(ButtonWidget.builder(Text.translatable("gui.cancel"), b -> {
             ScoreboardTweaks.config().backgroundRgb = original; close();
-        }).dimensions(left + 12, top + 206, 134, 20).build());
+        }).dimensions(left + 12, top + 206, (panelWidth - 32) / 2, 20).build());
         addDrawableChild(ButtonWidget.builder(Text.translatable("gui.done"), b -> close())
-            .dimensions(left + 154, top + 206, 134, 20).build());
+            .dimensions(left + panelWidth / 2 + 4, top + 206, (panelWidth - 32) / 2, 20).build());
     }
     private void applyColor() {
         int rgb = ColorMath.rgb(hue, saturation, value);
@@ -68,42 +73,44 @@ public final class ColorPickerScreen extends Screen {
         updatingHex = false;
     }
     @Override public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        context.fill(left, top, left + 300, top + 232, 0xF51B202B);
-        context.drawCenteredTextWithShadow(textRenderer, title, width / 2, top + 10, 0xFFFFFFFF);
+        context.fill(left, top, left + panelWidth, top + 232, 0xF51B202B);
+        context.drawCenteredTextWithShadow(textRenderer, title, left + panelWidth / 2, top + 10, 0xFFFFFFFF);
         int px = left + 12, py = top + 32;
-        // A small, bounded number of quads; no textures or native image allocations per frame.
-        for (int y = 0; y < SV_HEIGHT; y += 3) {
-            for (int x = 0; x < SV_WIDTH; x += 3) {
-                int color = 0xFF000000 | ColorMath.rgb(hue, x / (double)(SV_WIDTH - 1), 1 - y / (double)(SV_HEIGHT - 1));
-                context.fill(px + x, py + y, px + Math.min(x + 3, SV_WIDTH), py + Math.min(y + 3, SV_HEIGHT), color);
-            }
+        // HSV at fixed saturation is a linear vertical gradient. A column gradient
+        // replaces dozens of cell quads: ~120 quads instead of ~3500 each frame.
+        for (int x = 0; x < svWidth; x += 2) {
+            int bright = 0xFF000000 | ColorMath.rgb(hue, x / (double)(svWidth - 1), 1);
+            context.fillGradient(px + x, py, px + Math.min(x + 2, svWidth), py + SV_HEIGHT, bright, 0xFF000000);
         }
-        for (int y = 0; y < SV_HEIGHT; y++)
-            context.fill(left + 260, py + y, left + 282, py + y + 1, 0xFF000000 | ColorMath.rgb(y / (double)(SV_HEIGHT - 1), 1, 1));
-        int sx = px + (int)Math.round(saturation * (SV_WIDTH - 1));
+        for (int sector = 0; sector < 6; sector++) {
+            context.fillGradient(hueLeft, py + sector * SV_HEIGHT / 6, hueLeft + 22, py + (sector + 1) * SV_HEIGHT / 6,
+                0xFF000000 | ColorMath.rgb(sector / 6.0, 1, 1), 0xFF000000 | ColorMath.rgb((sector + 1) / 6.0, 1, 1));
+        }
+        int sx = px + (int)Math.round(saturation * (svWidth - 1));
         int sy = py + (int)Math.round((1 - value) * (SV_HEIGHT - 1));
         context.fill(sx - 3, sy - 3, sx + 4, sy + 4, 0xFF000000);
         context.fill(sx - 2, sy - 2, sx + 3, sy + 3, 0xFFFFFFFF);
         context.fill(sx - 1, sy - 1, sx + 2, sy + 2, 0xFF000000 | ScoreboardTweaks.config().backgroundRgb);
         int hy = py + (int)Math.round(hue * (SV_HEIGHT - 1));
-        context.fill(left + 257, hy - 2, left + 285, hy + 3, 0xFF000000);
-        context.fill(left + 259, hy - 1, left + 283, hy + 2, 0xFFFFFFFF);
+        context.fill(hueLeft - 3, hy - 2, hueLeft + 25, hy + 3, 0xFF000000);
+        context.fill(hueLeft - 1, hy - 1, hueLeft + 23, hy + 2, 0xFFFFFFFF);
         super.render(context, mouseX, mouseY, delta);
-        context.fill(left + 12, top + 176, left + 42, top + 194, 0xFF000000 | ScoreboardTweaks.config().backgroundRgb);
+        context.fill(left + 12, top + 176, left + 36, top + 194, 0xFF000000 | ScoreboardTweaks.config().backgroundRgb);
         int[] presets = {0x000000, 0xFFFFFF, 0x102C54, 0x382052};
-        for (int i = 0; i < presets.length; i++) context.fill(left + 177 + i * 29, top + 180, left + 193 + i * 29, top + 190, 0xFF000000 | presets[i]);
+        for (int i = 0; i < presets.length; i++) context.fill(left + panelWidth - 81 + i * 19, top + 180, left + panelWidth - 69 + i * 19, top + 190, 0xFF000000 | presets[i]);
+        SidebarRenderer.renderPreview(context, layout);
     }
     @Override public boolean mouseClicked(double x, double y, int button) {
         if (button == 0) {
-            if (x >= left + 12 && x < left + 12 + SV_WIDTH && y >= top + 32 && y < top + 32 + SV_HEIGHT) dragTarget = 1;
-            else if (x >= left + 256 && x < left + 286 && y >= top + 32 && y < top + 32 + SV_HEIGHT) dragTarget = 2;
+            if (x >= left + 12 && x < left + 12 + svWidth && y >= top + 32 && y < top + 32 + SV_HEIGHT) dragTarget = 1;
+            else if (x >= hueLeft - 4 && x < hueLeft + 26 && y >= top + 32 && y < top + 32 + SV_HEIGHT) dragTarget = 2;
             if (dragTarget != 0) { setFocused(null); updateFromMouse(x, y); return true; }
         }
         return super.mouseClicked(x, y, button);
     }
     private void updateFromMouse(double x, double y) {
         if (dragTarget == 1) {
-            saturation = Layout.unit((x - left - 12) / (SV_WIDTH - 1));
+            saturation = Layout.unit((x - left - 12) / (svWidth - 1));
             value = 1 - Layout.unit((y - top - 32) / (SV_HEIGHT - 1));
         } else hue = Layout.unit((y - top - 32) / (SV_HEIGHT - 1));
         applyColor();

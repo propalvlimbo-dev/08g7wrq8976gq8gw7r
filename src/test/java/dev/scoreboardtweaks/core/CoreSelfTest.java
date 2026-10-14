@@ -72,6 +72,16 @@ public final class CoreSelfTest {
             double[] hsv = ColorMath.hsv(rgb);
             check(ColorMath.rgb(hsv[0], hsv[1], hsv[2]) == rgb, "HSV hex round trip " + rgb);
         }
+        for (int w : new int[] {320, 427, 480, 500, 640, 960}) {
+            for (int h : new int[] {240, 360, 540}) {
+                EditorLayout editor = EditorLayout.of(w, h);
+                var panel = editor.panel(); var preview = editor.preview(); var content = editor.previewContent();
+                check(panel.x() >= 0 && panel.y() >= 0, "controls inside screen");
+                check(panel.x() + panel.width() < preview.x(), "preview cannot be covered by controls");
+                check(preview.x() + preview.width() <= w && preview.y() + preview.height() <= h, "preview inside screen");
+                check(content.width() > 0 && content.height() > 0 && preview.contains(content.x(), content.y()), "preview content valid");
+            }
+        }
         System.out.println("PASS: " + checks + " core checks (layout, resizing, drag/click separation)");
     }
 }

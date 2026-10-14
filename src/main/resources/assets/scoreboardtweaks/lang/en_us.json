@@ -1,6 +1,6 @@
 {
   "scoreboardtweaks.title": "Scoreboard Settings",
-  "scoreboardtweaks.live_hint": "Live preview · Esc to save",
+  "scoreboardtweaks.live_hint": "Live changes · Esc to return",
   "scoreboardtweaks.numbers": "Right-hand scores: %s",
   "scoreboardtweaks.hidden": "hidden",
   "scoreboardtweaks.visible": "visible",
@@ -12,15 +12,13 @@
   "scoreboardtweaks.purple": "Purple",
   "scoreboardtweaks.reset_position": "Reset position",
   "scoreboardtweaks.reset_all": "Reset everything",
-  "scoreboardtweaks.drag_hint": "Click: settings · Hold: drag",
   "scoreboardtweaks.save_error": "[Scoreboard Tweaks] Could not save settings. See latest.log for details.",
   "scoreboardtweaks.open_settings": "Scoreboard…",
-  "scoreboardtweaks.move": "Move scoreboard",
-  "scoreboardtweaks.place_hint": "Click to place · Hold left mouse to drag",
-  "scoreboardtweaks.no_sidebar": "No sidebar, or HUD hidden (F1)",
   "scoreboardtweaks.color": "Color…",
   "scoreboardtweaks.palette": "Background color palette",
-  "scoreboardtweaks.scale": "Scoreboard size: %s%%",
+  "scoreboardtweaks.scale": "Size: %s%%",
   "scoreboardtweaks.numbers_short": "Scores: %s",
-  "scoreboardtweaks.background_short": "Background: %s"
+  "scoreboardtweaks.background_short": "Background: %s",
+  "scoreboardtweaks.preview": "Preview",
+  "scoreboardtweaks.no_preview": "No sidebar"
 }
