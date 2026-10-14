@@ -13,5 +13,6 @@
   "scoreboardtweaks.reset_position": "Reset position",
   "scoreboardtweaks.reset_all": "Reset everything",
   "scoreboardtweaks.drag_hint": "Click: settings · Hold: drag",
-  "scoreboardtweaks.save_error": "[Scoreboard Tweaks] Could not save settings. See latest.log for details."
+  "scoreboardtweaks.save_error": "[Scoreboard Tweaks] Could not save settings. See latest.log for details.",
+  "scoreboardtweaks.open_settings": "Scoreboard…"
 }

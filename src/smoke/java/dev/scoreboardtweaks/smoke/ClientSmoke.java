@@ -105,8 +105,8 @@ public final class ClientSmoke implements ClientModInitializer {
                                 require(client.currentScreen instanceof SettingsScreen, "settings still open");
                                 client.currentScreen.close();
                                 require(client.currentScreen instanceof TitleScreen, "returns to parent screen");
-                                System.out.println("SCOREBOARD_SMOKE_PASS: runtime mixins, sidebar rendering, number width, positions, config, menu and parent screen");
-                                client.scheduleStop();
+                                System.out.println("RENDER_SMOKE_PASS: mixins, renderer, config and menu");
+                                WorldInputChecks.start(client);
                             });
                         } catch (Exception e) { throw new RuntimeException(e); }
                     }, "scoreboard-smoke-finish").start();

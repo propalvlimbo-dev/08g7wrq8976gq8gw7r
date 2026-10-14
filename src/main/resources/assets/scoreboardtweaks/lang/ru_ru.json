@@ -13,5 +13,6 @@
   "scoreboardtweaks.reset_position": "Сброс позиции",
   "scoreboardtweaks.reset_all": "Сбросить всё",
   "scoreboardtweaks.drag_hint": "ЛКМ: настройки · Зажать: двигать",
-  "scoreboardtweaks.save_error": "[Scoreboard Tweaks] Не удалось сохранить настройки. Подробности в latest.log."
+  "scoreboardtweaks.save_error": "[Scoreboard Tweaks] Не удалось сохранить настройки. Подробности в latest.log.",
+  "scoreboardtweaks.open_settings": "Скорборд…"
 }

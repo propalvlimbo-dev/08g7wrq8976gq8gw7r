@@ -22,25 +22,33 @@ public final class SidebarInteraction {
         }
     }
 
-    public static boolean button(int button, int action) {
+    /** Coordinates come from ChatScreen, already converted to GUI pixels by Minecraft. */
+    public static boolean mousePressed(double x, double y, int button) {
         checkScreen();
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (!(client.currentScreen instanceof ChatScreen) || button != 0 || client.world == null || client.options.hudHidden) return false;
-        double x = mouseX(), y = mouseY();
-        if (action == 1) return GESTURE.press(x, y, SidebarRenderer.bounds());
-        if (action == 0 && GESTURE.isPressed()) {
-            move(x, y); // Include any movement between the last cursor event and release.
-            DragGesture.Release released = GESTURE.release(x, y);
-            if (released == DragGesture.Release.DRAG) ScoreboardTweaks.save();
-            else if (released == DragGesture.Release.CLICK) openSettings();
-            return true;
-        }
-        return false;
+        if (!canInteract() || button != 0) return false;
+        return GESTURE.press(x, y, SidebarRenderer.bounds());
     }
 
-    public static void cursorMoved() {
+    public static boolean mouseReleased(double x, double y, int button) {
         checkScreen();
-        if (GESTURE.isPressed()) move(mouseX(), mouseY());
+        if (!canInteract() || button != 0 || !GESTURE.isPressed()) return false;
+        move(x, y);
+        DragGesture.Release released = GESTURE.release(x, y);
+        if (released == DragGesture.Release.DRAG) ScoreboardTweaks.save();
+        else if (released == DragGesture.Release.CLICK) openSettings();
+        return true;
+    }
+
+    public static boolean mouseDragged(double x, double y, int button) {
+        checkScreen();
+        if (!canInteract() || button != 0 || !GESTURE.isPressed()) return false;
+        move(x, y);
+        return true;
+    }
+
+    private static boolean canInteract() {
+        MinecraftClient client = MinecraftClient.getInstance();
+        return client.currentScreen instanceof ChatScreen && client.world != null && !client.options.hudHidden;
     }
 
     private static void move(double x, double y) {
@@ -52,15 +60,6 @@ public final class SidebarInteraction {
         config.customPosition = true;
         config.anchorX = Layout.toAnchor(GESTURE.left(x), bounds.width(), window.getScaledWidth());
         config.anchorY = Layout.toAnchor(GESTURE.top(y), bounds.height(), window.getScaledHeight());
-    }
-
-    private static double mouseX() {
-        MinecraftClient client = MinecraftClient.getInstance();
-        return client.mouse.getX() * client.getWindow().getScaledWidth() / client.getWindow().getWidth();
-    }
-    private static double mouseY() {
-        MinecraftClient client = MinecraftClient.getInstance();
-        return client.mouse.getY() * client.getWindow().getScaledHeight() / client.getWindow().getHeight();
     }
 
     public static void openSettings() {
@@ -77,13 +76,15 @@ public final class SidebarInteraction {
 
     public static void renderChatOverlay(DrawContext context, int mouseX, int mouseY) {
         Layout.Bounds bounds = SidebarRenderer.bounds();
-        if (bounds == null || (!bounds.contains(mouseX, mouseY) && !GESTURE.isPressed())) return;
-        int color = GESTURE.isDragging() ? 0xFF55EFC4 : 0xFF77BBFF;
+        if (bounds == null) return;
+        boolean hovered = bounds.contains(mouseX, mouseY);
+        int color = GESTURE.isDragging() ? 0xFF55EFC4 : (hovered ? 0xFF77BBFF : 0x8877BBFF);
         int x = bounds.x(), y = bounds.y(), right = x + bounds.width(), bottom = y + bounds.height();
         context.fill(x, y, right, y + 1, color);
         context.fill(x, bottom - 1, right, bottom, color);
         context.fill(x, y, x + 1, bottom, color);
         context.fill(right - 1, y, right, bottom, color);
+        if (!hovered && !GESTURE.isPressed()) return;
         MinecraftClient client = MinecraftClient.getInstance();
         Text hint = Text.translatable("scoreboardtweaks.drag_hint");
         int hintX = Math.max(2, Math.min(x, client.getWindow().getScaledWidth() - client.textRenderer.getWidth(hint) - 2));

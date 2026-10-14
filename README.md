@@ -6,7 +6,7 @@
 ## Установка
 
 1. Установите **Minecraft Java Edition 1.21.4** с **Fabric Loader 0.16.10 или новее**.
-2. Положите `scoreboard-tweaks-1.0.0-mc1.21.4.jar` из `downloads/` в папку `mods`
+2. Положите `scoreboard-tweaks-1.0.1-mc1.21.4.jar` из `downloads/` в папку `mods`
    выбранного профиля игры (обычно `%appdata%\.minecraft\mods` в Windows).
 3. Запустите профиль Fabric. Требуется Java 21 или новее; официальный лаунчер
    обычно сам выбирает подходящую Java. **Fabric API и Mod Menu не нужны.**
@@ -80,7 +80,7 @@ JDK 21, Gradle Wrapper 8.12, Fabric Loom 1.9.2, Yarn 1.21.4+build.8.
 # gradlew.bat build
 ```
 
-Готовый remapped-мод: `build/libs/scoreboard-tweaks-1.0.0.jar`.
+Готовый remapped-мод: `build/libs/scoreboard-tweaks-1.0.1.jar`.
 Не устанавливайте `*-sources.jar` или development JAR.
 Нужен доступ к репозиториям Fabric, Maven Central и серверам Minecraft.
 
@@ -108,3 +108,13 @@ JAVA_HOME=/path/to/jdk21 ./scripts/test-core.sh
 - Ручная проверка перетаскивания на реальном сервере и совместимости со
   сторонними HUD-модами не проводилась.
 - Лог: `downloads/smoke-test.log`; SHA-256: `downloads/SHA256SUMS.txt`.
+
+## Изменения 1.0.1
+
+- Нажатия/перетаскивание обрабатываются непосредственно экраном чата,
+  без перехвата глобальных событий Mouse и повторного пересчёта координат.
+- В открытом чате справа сверху есть кнопка **«Скорборд…»**,
+  доступная даже без scoreboard. По ней можно убедиться, что мод загружен.
+- Область перетаскивания обозначена рамкой при открытом чате.
+- Для обновления удалите старый `scoreboard-tweaks-1.0.0-mc1.21.4.jar`,
+  установите только 1.0.1 и полностью перезапустите игру. Конфиг сохраняется.
