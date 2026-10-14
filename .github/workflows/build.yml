@@ -22,6 +22,8 @@ jobs:
       - name: Start actual Minecraft client under virtual display
         run: |
           set -o pipefail
+          mkdir -p run-smoke
+          printf 'onboardAccessibility:false\nmaxFps:60\nsoundCategory_master:0.0\nlang:ru_ru\n' > run-smoke/options.txt
           timeout 300 xvfb-run -a -s '-screen 0 1280x720x24' ./gradlew --no-daemon runSmokeClient 2>&1 | tee smoke.log
           grep -q 'SCOREBOARD_SMOKE_PASS' smoke.log
       - name: Preserve diagnostic log on failure
