@@ -1,2 +1,3 @@
 5f11958a63312c9df39e19ef20578dc4b6d046422e0ba19baa33b46d390c97cf  downloads/scoreboard-tweaks-1.0.0-mc1.21.4.jar
 4782e400f97adcf9f5751670e440f7145876137e1a9cb620fc72b07d8380cc85  downloads/scoreboard-tweaks-1.0.1-mc1.21.4.jar
+64641ceed7e29cc596048bcc15ea7df30df164c694b25d2ef00d5fa4a5903ec0  downloads/scoreboard-tweaks-1.1.0-mc1.21.4.jar

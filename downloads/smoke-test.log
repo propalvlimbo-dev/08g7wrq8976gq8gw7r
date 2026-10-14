@@ -18,23 +18,23 @@ Fabric Loom: 1.9.2
 > Task :smokeClasses
 
 > Task :runSmokeClient
-[11:57:33] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.4 with Fabric Loader 0.16.10
-[11:57:33] [main/INFO] (FabricLoader) Loading 6 mods:
+[12:10:10] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.4 with Fabric Loader 0.16.10
+[12:10:10] [main/INFO] (FabricLoader) Loading 6 mods:
 	- fabricloader 0.16.10
 	- java 21
 	- minecraft 1.21.4
 	- mixinextras 0.4.1
-	- scoreboardtweaks 1.0.1
+	- scoreboardtweaks 1.1.0
 	- scoreboardtweaks_smoke 1.0.0
-[11:57:33] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
-[11:57:33] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[11:57:33] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[11:57:34] [Datafixer Bootstrap/INFO] (Minecraft) 243 Datafixer optimizations took 266 milliseconds
-[11:57:38] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[11:57:38] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[11:57:38] [Render thread/INFO] (Minecraft) Setting user: Player856
-[11:57:38] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.3.3-snapshot
-[11:57:45] [Render thread/ERROR] (Minecraft) Error while loading the narrator
+[12:10:10] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/home/runner/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.4+mixin.0.8.7/6a12aacc794f1078458433116e9ed42c1cc98096/sponge-mixin-0.15.4+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
+[12:10:10] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[12:10:10] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[12:10:11] [Datafixer Bootstrap/INFO] (Minecraft) 243 Datafixer optimizations took 300 milliseconds
+[12:10:14] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[12:10:15] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[12:10:15] [Render thread/INFO] (Minecraft) Setting user: Player855
+[12:10:15] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.3.3-snapshot
+[12:10:18] [Render thread/ERROR] (Minecraft) Error while loading the narrator
 com.mojang.text2speech.Narrator$InitializeException: Failed to load library flite
 	at knot/com.mojang.text2speech.NarratorLinux$FliteLibrary.loadNative(NarratorLinux.java:69) ~[text2speech-1.17.9.jar:?]
 	at knot/com.mojang.text2speech.NarratorLinux.<init>(NarratorLinux.java:18) ~[text2speech-1.17.9.jar:?]
@@ -100,9 +100,9 @@ Native library (linux-x86-64/libflite.so) not found in resource path (/home/runn
 		at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) [fabric-loader-0.16.10.jar:?]
 		at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) [fabric-loader-0.16.10.jar:?]
 		at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?]
-[11:57:45] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla
-[11:57:46] [Worker-Main-3/INFO] (Minecraft) Found unifont_all_no_pua-16.0.01.hex, loading
-[11:57:46] [Worker-Main-3/INFO] (Minecraft) Found unifont_jp_patch-16.0.01.hex, loading
+[12:10:18] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla
+[12:10:18] [Worker-Main-2/INFO] (Minecraft) Found unifont_all_no_pua-16.0.01.hex, loading
+[12:10:18] [Worker-Main-2/INFO] (Minecraft) Found unifont_jp_patch-16.0.01.hex, loading
 ALSA lib confmisc.c:855:(parse_card) cannot find card '0'
 ALSA lib conf.c:5208:(_snd_config_evaluate) function snd_func_card_inum returned error: No such file or directory
 ALSA lib confmisc.c:422:(snd_func_concat) error evaluating strings
@@ -119,7 +119,7 @@ ALSA lib confmisc.c:1342:(snd_func_refer) error evaluating name
 ALSA lib conf.c:5208:(_snd_config_evaluate) function snd_func_refer returned error: No such file or directory
 ALSA lib conf.c:5731:(snd_config_expand) Evaluate error: No such file or directory
 ALSA lib pcm.c:2721:(snd_pcm_open_noupdate) Unknown PCM default
-[11:57:47] [Render thread/ERROR] (Minecraft) Error starting SoundSystem. Turning off sounds & music
+[12:10:20] [Render thread/ERROR] (Minecraft) Error starting SoundSystem. Turning off sounds & music
 java.lang.IllegalStateException: Failed to open OpenAL device
 	at knot/net.minecraft.client.sound.SoundEngine.openDeviceOrFallback(SoundEngine.java:302) ~[minecraft-merged-1.21.4-net.fabricmc.yarn.1_21_4.1.21.4+build.8-v2.jar:?]
 	at knot/net.minecraft.client.sound.SoundEngine.init(SoundEngine.java:154) ~[minecraft-merged-1.21.4-net.fabricmc.yarn.1_21_4.1.21.4+build.8-v2.jar:?]
@@ -142,27 +142,61 @@ java.lang.IllegalStateException: Failed to open OpenAL device
 	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) [fabric-loader-0.16.10.jar:?]
 	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) [fabric-loader-0.16.10.jar:?]
 	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?]
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 2048x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
-[11:57:47] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
-[11:57:50] [Render thread/WARN] (ScoreboardTweaks) Cannot read scoreboard config; using defaults
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 2048x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[12:10:20] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
+[12:10:20] [Download-1/WARN] (Minecraft) Couldn't look up profile properties for 38ee4029-e397-3902-8d79-d6c4d51a8fef
+com.mojang.authlib.exceptions.MinecraftClientException: Failed to read from https://sessionserver.mojang.com/session/minecraft/profile/38ee4029e39739028d79d6c4d51a8fef?unsigned=false due to Read timed out
+	at knot/com.mojang.authlib.minecraft.client.MinecraftClient.readInputStream(MinecraftClient.java:111) ~[authlib-6.0.57.jar:?]
+	at knot/com.mojang.authlib.minecraft.client.MinecraftClient.get(MinecraftClient.java:56) ~[authlib-6.0.57.jar:?]
+	at knot/com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService.fetchProfileUncached(YggdrasilMinecraftSessionService.java:201) ~[authlib-6.0.57.jar:?]
+	at knot/com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService.fetchProfile(YggdrasilMinecraftSessionService.java:171) ~[authlib-6.0.57.jar:?]
+	at knot/net.minecraft.client.MinecraftClient.method_53464(MinecraftClient.java:453) ~[minecraft-merged-1.21.4-net.fabricmc.yarn.1_21_4.1.21.4+build.8-v2.jar:?]
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:278) ~[?:?]
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:304) ~[?:?]
+	at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346) ~[?:?]
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796) ~[?:?]
+	at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099) ~[?:?]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:489) ~[?:?]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.readHeader(SSLSocketInputRecord.java:483) ~[?:?]
+	at java.base/sun.security.ssl.SSLSocketInputRecord.bytesInCompletePacket(SSLSocketInputRecord.java:70) ~[?:?]
+	at java.base/sun.security.ssl.SSLSocketImpl.readApplicationRecord(SSLSocketImpl.java:1460) ~[?:?]
+	at java.base/sun.security.ssl.SSLSocketImpl$AppInputStream.read(SSLSocketImpl.java:1066) ~[?:?]
+	at java.base/java.io.BufferedInputStream.fill(BufferedInputStream.java:291) ~[?:?]
+	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:347) ~[?:?]
+	at java.base/java.io.BufferedInputStream.implRead(BufferedInputStream.java:420) ~[?:?]
+	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:399) ~[?:?]
+	at java.base/sun.net.www.http.HttpClient.parseHTTPHeader(HttpClient.java:835) ~[?:?]
+	at java.base/sun.net.www.http.HttpClient.parseHTTP(HttpClient.java:767) ~[?:?]
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1730) ~[?:?]
+	at java.base/sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1632) ~[?:?]
+	at java.base/java.net.HttpURLConnection.getResponseCode(HttpURLConnection.java:531) ~[?:?]
+	at java.base/sun.net.www.protocol.https.HttpsURLConnectionImpl.getResponseCode(HttpsURLConnectionImpl.java:307) ~[?:?]
+	at knot/com.mojang.authlib.minecraft.client.MinecraftClient.readInputStream(MinecraftClient.java:82) ~[authlib-6.0.57.jar:?]
+	... 8 more
+[12:10:22] [Render thread/WARN] (ScoreboardTweaks) Cannot read scoreboard config; using defaults
 com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: Expected ':' at line 1 column 7 path $.not
 See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
 	at knot/com.google.gson.Gson.fromJson(Gson.java:1375) ~[gson-2.11.0.jar:?]
 	at knot/com.google.gson.Gson.fromJson(Gson.java:1262) ~[gson-2.11.0.jar:?]
 	at knot/com.google.gson.Gson.fromJson(Gson.java:1199) ~[gson-2.11.0.jar:?]
-	at knot/dev.scoreboardtweaks.config.ModConfig.load(ModConfig.java:47) [main/:?]
+	at knot/dev.scoreboardtweaks.config.ModConfig.load(ModConfig.java:49) [main/:?]
 	at knot/dev.scoreboardtweaks.smoke.ClientSmoke$RenderChecks.render(ClientSmoke.java:92) [smoke/:?]
 	at knot/net.minecraft.client.gui.screen.Screen.renderWithTooltip(Screen.java:116) [minecraft-merged-1.21.4-net.fabricmc.yarn.1_21_4.1.21.4+build.8-v2.jar:?]
 	at knot/net.minecraft.client.render.GameRenderer.render(GameRenderer.java:551) [minecraft-merged-1.21.4-net.fabricmc.yarn.1_21_4.1.21.4+build.8-v2.jar:?]
@@ -181,44 +215,52 @@ See https://github.com/google/gson/blob/main/Troubleshooting.md#malformed-json
 	at knot/com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:514) ~[gson-2.11.0.jar:?]
 	at knot/com.google.gson.Gson.fromJson(Gson.java:1361) ~[gson-2.11.0.jar:?]
 	... 13 more
-[11:57:53] [Render thread/INFO] (Minecraft) [STDOUT]: RENDER_SMOKE_PASS: mixins, renderer, config and menu
-[11:57:53] [scoreboard-world-input-checks/INFO] (Minecraft) [STDOUT]: WORLD_INPUT: creating a real offline singleplayer world
-[11:57:54] [Render thread/INFO] (Minecraft) Loaded 1370 recipes
-[11:57:54] [Render thread/INFO] (Minecraft) Loaded 1481 advancements
-[11:57:54] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.21.4
-[11:57:54] [Server thread/INFO] (Minecraft) Generating keypair
-[11:57:59] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[11:57:59] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 2%
-[11:57:59] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 2%
-[11:58:00] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 2%
-[11:58:00] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 18%
-[11:58:01] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 30%
-[11:58:01] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 51%
-[11:58:02] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 51%
-[11:58:02] [Render thread/INFO] (Minecraft) Time elapsed: 3284 ms
-[11:58:02] [Server thread/INFO] (Minecraft) Changing view distance to 12, from 10
-[11:58:02] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
-[11:58:03] [Server thread/INFO] (Minecraft) Player856[local:E:07e23df0] logged in with entity id 30 at (-145.5, 73.0, -145.5)
-[11:58:03] [Server thread/INFO] (Minecraft) Player856 присоединился к игре
-[11:58:03] [Render thread/INFO] (Minecraft) Loaded 2 advancements
-[11:58:09] [scoreboard-world-input-checks/INFO] (Minecraft) [STDOUT]: WORLD_INPUT_PASS: Mouse click + drag + draft, GUI scale 2
-[11:58:11] [scoreboard-world-input-checks/INFO] (Minecraft) [STDOUT]: WORLD_INPUT_PASS: Mouse click + drag + draft, GUI scale 3
-[11:58:11] [Render thread/INFO] (Minecraft) [STDOUT]: SCOREBOARD_SMOKE_PASS: rendering, config, menu, REAL-WORLD Mouse click/drag at GUI scales 2 and 3, chat draft, Ctrl+K and fallback button
-[11:58:11] [Render thread/INFO] (Minecraft) Stopping!
-[11:58:11] [Server thread/INFO] (Minecraft) Player856 lost connection: Отключение
-[11:58:11] [Server thread/INFO] (Minecraft) Player856 покинул игру
-[11:58:11] [Server thread/INFO] (Minecraft) Stopping singleplayer server as player logged out
-[11:58:12] [Server thread/INFO] (Minecraft) Stopping server
-[11:58:12] [Server thread/INFO] (Minecraft) Saving players
-[11:58:12] [Server thread/INFO] (Minecraft) Saving worlds
-[11:58:12] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:overworld
-[11:58:13] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:the_end
-[11:58:13] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:the_nether
-[11:58:13] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (Новый мир): All chunks are saved
-[11:58:13] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[11:58:13] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[11:58:13] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
-gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1791979049672.json
+[12:10:25] [Render thread/INFO] (Minecraft) [STDOUT]: RENDER_SMOKE_PASS: mixins, renderer, config and menu
+[12:10:25] [scoreboard-world-input-checks/INFO] (Minecraft) [STDOUT]: WORLD_INPUT: creating a real offline singleplayer world
+[12:10:26] [Render thread/INFO] (Minecraft) Loaded 1370 recipes
+[12:10:26] [Render thread/INFO] (Minecraft) Loaded 1481 advancements
+[12:10:27] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.21.4
+[12:10:27] [Server thread/INFO] (Minecraft) Generating keypair
+[12:10:33] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[12:10:33] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 2%
+[12:10:34] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 2%
+[12:10:34] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 2%
+[12:10:34] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 14%
+[12:10:35] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 18%
+[12:10:35] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 18%
+[12:10:36] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 51%
+[12:10:36] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 51%
+[12:10:37] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 51%
+[12:10:37] [Server thread/INFO] (Minecraft) Changing view distance to 12, from 10
+[12:10:37] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
+[12:10:38] [Render thread/INFO] (Minecraft) Подготовка области возрождения: 97%
+[12:10:38] [Render thread/INFO] (Minecraft) Time elapsed: 4907 ms
+[12:10:38] [Server thread/INFO] (Minecraft) Player855[local:E:592cc28f] logged in with entity id 39 at (69.5, 70.0, -3.5)
+[12:10:38] [Server thread/INFO] (Minecraft) Player855 присоединился к игре
+[12:10:39] [Render thread/INFO] (Minecraft) Loaded 2 advancements
+[12:10:44] [scoreboard-world-input-checks/INFO] (Minecraft) [STDOUT]: WORLD_INPUT_PASS: Mouse click + drag + draft, GUI scale 2
+[12:10:46] [scoreboard-world-input-checks/INFO] (Minecraft) [STDOUT]: WORLD_INPUT_PASS: Mouse click + drag + draft, GUI scale 3
+[12:10:48] [scoreboard-world-input-checks/INFO] (Minecraft) [STDOUT]: SCALE_INPUT_PASS: 0.5
+[12:10:50] [scoreboard-world-input-checks/INFO] (Minecraft) [STDOUT]: SCALE_INPUT_PASS: 1.0
+[12:10:51] [scoreboard-world-input-checks/INFO] (Minecraft) [STDOUT]: SCALE_INPUT_PASS: 1.5
+[12:10:53] [scoreboard-world-input-checks/INFO] (Minecraft) [STDOUT]: SCALE_INPUT_PASS: 2.0
+[12:10:54] [Render thread/INFO] (Minecraft) [STDOUT]: FEATURE_PASS: palette apply/cancel, size slider, destination placement and save/reload
+[12:10:54] [Render thread/INFO] (Minecraft) [STDOUT]: SCOREBOARD_SMOKE_PASS: real-world Mouse click/drag, GUI scales 2/3, board scales 50/100/150/200, palette/HEX, size slider, click-to-place, save/reload
+[12:10:54] [Render thread/INFO] (Minecraft) Stopping!
+[12:10:54] [Server thread/INFO] (Minecraft) Player855 lost connection: Отключение
+[12:10:54] [Server thread/INFO] (Minecraft) Player855 покинул игру
+[12:10:54] [Server thread/INFO] (Minecraft) Stopping singleplayer server as player logged out
+[12:10:54] [Server thread/INFO] (Minecraft) Stopping server
+[12:10:54] [Server thread/INFO] (Minecraft) Saving players
+[12:10:54] [Server thread/INFO] (Minecraft) Saving worlds
+[12:10:55] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:overworld
+[12:10:55] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:the_end
+[12:10:55] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[Новый мир]'/minecraft:the_nether
+[12:10:56] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (Новый мир): All chunks are saved
+[12:10:56] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[12:10:56] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[12:10:56] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/__run_2-1791979806240.json
 
-BUILD SUCCESSFUL in 46s
+BUILD SUCCESSFUL in 52s
 9 actionable tasks: 6 executed, 3 up-to-date
