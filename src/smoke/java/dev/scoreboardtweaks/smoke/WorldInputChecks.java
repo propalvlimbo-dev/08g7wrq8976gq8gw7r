@@ -127,7 +127,10 @@ public final class WorldInputChecks {
         on(client, () -> { ((MouseAccessor)client.mouse).smoke$button(client.getWindow().getHandle(), 0, action, 0); return null; });
     }
     private static <T> T on(MinecraftClient client, Callable<T> action) throws Exception {
-        return client.submit(action).get(90, TimeUnit.SECONDS);
+        return client.submit(() -> {
+            try { return action.call(); }
+            catch (Exception e) { throw new RuntimeException(e); }
+        }).get(90, TimeUnit.SECONDS);
     }
     private static void waitFor(MinecraftClient client, Callable<Boolean> condition) throws Exception {
         long deadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(160);

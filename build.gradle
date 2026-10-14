@@ -46,6 +46,7 @@ loom {
             source sourceSets.smoke
             runDir 'run-smoke'
             vmArg '-Dscoreboardtweaks.smoke=true'
+            programArgs '--width', '1280', '--height', '720'
         }
     }
     mods {

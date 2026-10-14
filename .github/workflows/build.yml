@@ -23,7 +23,9 @@ jobs:
         with:
           cache-read-only: false
       - name: Compile, test and remap for Fabric
-        run: ./gradlew --no-daemon build
+        run: |
+          set -o pipefail
+          ./gradlew --no-daemon build 2>&1 | tee compile.log
       - name: Start actual Minecraft client under virtual display
         run: |
           set -o pipefail
@@ -35,7 +37,7 @@ jobs:
         if: failure()
         run: |
           mkdir -p downloads
-          cp smoke.log downloads/smoke-failure.log 2>/dev/null || true
+          cat compile.log smoke.log > downloads/smoke-failure.log 2>/dev/null || true
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add downloads
