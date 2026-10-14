@@ -52,6 +52,26 @@ public final class CoreSelfTest {
         gesture.press(15, 25, bounds);
         gesture.cancel();
         check(gesture.release(15, 25) == DragGesture.Release.NONE, "screen close clears capture");
+        check(Layout.scale(Double.NaN) == 1, "invalid scale defaults to 100 percent");
+        check(Layout.scale(0.1) == 0.5 && Layout.scale(9) == 2, "scale range");
+        check(Layout.fitScale(2, 400, 100, 320, 240) == 0.8, "large board fits screen");
+        check(Layout.fitScale(2, 100, 400, 320, 240) == 0.6, "tall board fits screen");
+        check(bounds.expanded(6).contains(5, 25), "expanded target includes near-edge point");
+        check(!bounds.expanded(6).contains(3, 25), "expanded target has bounded margin");
+        gesture.cancel();
+        check(gesture.press(5, 25, bounds, 6), "near-border press captures");
+        check(gesture.left(25) == 30, "padding keeps original grab offset without jumping");
+        gesture.cancel();
+        check(ColorMath.rgb(0, 1, 1) == 0xFF0000, "HSV red");
+        check(ColorMath.rgb(1.0 / 3, 1, 1) == 0x00FF00, "HSV green");
+        check(ColorMath.rgb(2.0 / 3, 1, 1) == 0x0000FF, "HSV blue");
+        check(ColorMath.rgb(0.8, 0, 1) == 0xFFFFFF, "HSV white");
+        check(ColorMath.rgb(0.5, 1, 0) == 0, "HSV black");
+        check(ColorMath.rgb(1, 1, 1) == 0xFF0000, "hue wraps");
+        for (int rgb : new int[] {0, 0xFFFFFF, 0x102C54, 0x382052, 0xFF0000, 0xABCDEF, 0x808080, 0x010203}) {
+            double[] hsv = ColorMath.hsv(rgb);
+            check(ColorMath.rgb(hsv[0], hsv[1], hsv[2]) == rgb, "HSV hex round trip " + rgb);
+        }
         System.out.println("PASS: " + checks + " core checks (layout, resizing, drag/click separation)");
     }
 }

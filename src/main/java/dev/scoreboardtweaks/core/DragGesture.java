@@ -8,7 +8,11 @@ public final class DragGesture {
     private double startX, startY, offsetX, offsetY;
 
     public boolean press(double x, double y, Layout.Bounds bounds) {
-        if (pressed || bounds == null || !bounds.contains(x, y)) return false;
+        return press(x, y, bounds, 0);
+    }
+
+    public boolean press(double x, double y, Layout.Bounds bounds, int margin) {
+        if (pressed || bounds == null || !bounds.expanded(margin).contains(x, y)) return false;
         pressed = true;
         dragging = false;
         startX = x;

@@ -26,7 +26,7 @@ public final class SidebarInteraction {
     public static boolean mousePressed(double x, double y, int button) {
         checkScreen();
         if (!canInteract() || button != 0) return false;
-        return GESTURE.press(x, y, SidebarRenderer.bounds());
+        return GESTURE.press(x, y, SidebarRenderer.bounds(), 6);
     }
 
     public static boolean mouseReleased(double x, double y, int button) {
@@ -62,7 +62,15 @@ public final class SidebarInteraction {
         config.anchorY = Layout.toAnchor(GESTURE.top(y), bounds.height(), window.getScaledHeight());
     }
 
+    public static void openPosition() {
+        MinecraftClient.getInstance().setScreen(new PositionScreen(parentWithDraft()));
+    }
+
     public static void openSettings() {
+        MinecraftClient.getInstance().setScreen(new SettingsScreen(parentWithDraft()));
+    }
+
+    private static Screen parentWithDraft() {
         MinecraftClient client = MinecraftClient.getInstance();
         if (GESTURE.isDragging()) ScoreboardTweaks.save();
         GESTURE.cancel();
@@ -71,12 +79,13 @@ public final class SidebarInteraction {
             String draft = ((ChatScreenAccessor) parent).scoreboardtweaks$getChatField().getText();
             parent = new ChatScreen(draft);
         }
-        client.setScreen(new SettingsScreen(parent));
+        return parent;
     }
 
     public static void renderChatOverlay(DrawContext context, int mouseX, int mouseY) {
         Layout.Bounds bounds = SidebarRenderer.bounds();
         if (bounds == null) return;
+        bounds = bounds.expanded(6);
         boolean hovered = bounds.contains(mouseX, mouseY);
         int color = GESTURE.isDragging() ? 0xFF55EFC4 : (hovered ? 0xFF77BBFF : 0x8877BBFF);
         int x = bounds.x(), y = bounds.y(), right = x + bounds.width(), bottom = y + bounds.height();

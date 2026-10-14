@@ -23,12 +23,14 @@ public final class ModConfig {
     public boolean customPosition = false;
     public double anchorX = 1.0;
     public double anchorY = 0.5;
+    public double scale = 1.0;
 
     public void sanitize() {
         backgroundRgb &= 0xFFFFFF;
         backgroundOpacity = Math.max(0, Math.min(255, backgroundOpacity));
         anchorX = Layout.unit(anchorX);
         anchorY = Layout.unit(anchorY);
+        scale = Layout.scale(scale);
     }
 
     public int backgroundArgb() {

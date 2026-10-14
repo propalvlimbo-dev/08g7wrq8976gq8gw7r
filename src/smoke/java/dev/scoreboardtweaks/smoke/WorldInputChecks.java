@@ -104,7 +104,12 @@ public final class WorldInputChecks {
                     client.currentScreen.mouseClicked(settings.getX() + 3, settings.getY() + 3, 0);
                     require(client.currentScreen instanceof SettingsScreen, "visible fallback button opens settings");
                     client.currentScreen.close();
-                    System.out.println("SCOREBOARD_SMOKE_PASS: rendering, config, menu, REAL-WORLD Mouse click/drag at GUI scales 2 and 3, chat draft, Ctrl+K and fallback button");
+                    // Continue with palette, scaling and click-to-place checks outside the render thread.
+                    return null;
+                });
+                FeatureChecks.run(client);
+                on(client, () -> {
+                    System.out.println("SCOREBOARD_SMOKE_PASS: real-world Mouse click/drag, GUI scales 2/3, board scales 50/100/150/200, palette/HEX, size slider, click-to-place, save/reload");
                     client.scheduleStop();
                     return null;
                 });
@@ -115,7 +120,7 @@ public final class WorldInputChecks {
         }, "scoreboard-world-input-checks").start();
     }
 
-    private static void cursor(MinecraftClient client, double x, double y) throws Exception {
+    static void cursor(MinecraftClient client, double x, double y) throws Exception {
         on(client, () -> {
             var window = client.getWindow();
             ((MouseAccessor) client.mouse).smoke$cursor(window.getHandle(),
@@ -123,10 +128,10 @@ public final class WorldInputChecks {
             return null;
         });
     }
-    private static void button(MinecraftClient client, int action) throws Exception {
+    static void button(MinecraftClient client, int action) throws Exception {
         on(client, () -> { ((MouseAccessor)client.mouse).smoke$button(client.getWindow().getHandle(), 0, action, 0); return null; });
     }
-    private static <T> T on(MinecraftClient client, Callable<T> action) throws Exception {
+    static <T> T on(MinecraftClient client, Callable<T> action) throws Exception {
         return client.submit(() -> {
             try { return action.call(); }
             catch (Exception e) { throw new RuntimeException(e); }

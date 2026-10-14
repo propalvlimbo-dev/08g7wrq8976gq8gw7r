@@ -14,5 +14,13 @@
   "scoreboardtweaks.reset_all": "Сбросить всё",
   "scoreboardtweaks.drag_hint": "ЛКМ: настройки · Зажать: двигать",
   "scoreboardtweaks.save_error": "[Scoreboard Tweaks] Не удалось сохранить настройки. Подробности в latest.log.",
-  "scoreboardtweaks.open_settings": "Скорборд…"
+  "scoreboardtweaks.open_settings": "Скорборд…",
+  "scoreboardtweaks.move": "Переместить",
+  "scoreboardtweaks.place_hint": "Клик — поставить · Зажать ЛКМ — двигать",
+  "scoreboardtweaks.no_sidebar": "Нет скорборда или скрыт HUD (F1)",
+  "scoreboardtweaks.color": "Цвет…",
+  "scoreboardtweaks.palette": "Палитра цвета фона",
+  "scoreboardtweaks.scale": "Размер скорборда: %s%%",
+  "scoreboardtweaks.numbers_short": "Цифры: %s",
+  "scoreboardtweaks.background_short": "Фон: %s"
 }

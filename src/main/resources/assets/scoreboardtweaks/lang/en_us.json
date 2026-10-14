@@ -14,5 +14,13 @@
   "scoreboardtweaks.reset_all": "Reset everything",
   "scoreboardtweaks.drag_hint": "Click: settings · Hold: drag",
   "scoreboardtweaks.save_error": "[Scoreboard Tweaks] Could not save settings. See latest.log for details.",
-  "scoreboardtweaks.open_settings": "Scoreboard…"
+  "scoreboardtweaks.open_settings": "Scoreboard…",
+  "scoreboardtweaks.move": "Move scoreboard",
+  "scoreboardtweaks.place_hint": "Click to place · Hold left mouse to drag",
+  "scoreboardtweaks.no_sidebar": "No sidebar, or HUD hidden (F1)",
+  "scoreboardtweaks.color": "Color…",
+  "scoreboardtweaks.palette": "Background color palette",
+  "scoreboardtweaks.scale": "Scoreboard size: %s%%",
+  "scoreboardtweaks.numbers_short": "Scores: %s",
+  "scoreboardtweaks.background_short": "Background: %s"
 }

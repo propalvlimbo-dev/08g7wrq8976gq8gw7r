@@ -47,13 +47,13 @@ jobs:
           fi
       - uses: actions/upload-artifact@v5
         with:
-          name: scoreboard-tweaks-1.0.1-mc1.21.4
-          path: build/libs/scoreboard-tweaks-1.0.1.jar
+          name: scoreboard-tweaks-1.1.0-mc1.21.4
+          path: build/libs/scoreboard-tweaks-1.1.0.jar
       - name: Save small distributable on the session branch
         if: github.ref == 'refs/heads/arena/d7c6e662-08g7wrq8976gq8gw7r'
         run: |
           mkdir -p downloads
-          cp build/libs/scoreboard-tweaks-1.0.1.jar downloads/scoreboard-tweaks-1.0.1-mc1.21.4.jar
+          cp build/libs/scoreboard-tweaks-1.1.0.jar downloads/scoreboard-tweaks-1.1.0-mc1.21.4.jar
           sha256sum downloads/*.jar > downloads/SHA256SUMS.txt
           cp smoke.log downloads/smoke-test.log
           rm -f downloads/smoke-failure.log
