@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "dev.scoreboardtweaks.smoke",
+  "compatibilityLevel": "JAVA_21",
+  "client": ["HudAccessor"],
+  "injectors": {"defaultRequire": 1}
+}

@@ -30,3 +30,26 @@ tasks.register('coreTest', JavaExec) {
     mainClass = 'dev.scoreboardtweaks.core.CoreSelfTest'
 }
 check.dependsOn coreTest
+
+// A separate development-only mod exercises the actual Minecraft renderer under Xvfb.
+// It is NOT included in the distributable JAR.
+sourceSets {
+    smoke {
+        compileClasspath += sourceSets.main.compileClasspath + sourceSets.main.output
+        runtimeClasspath += sourceSets.main.runtimeClasspath + sourceSets.main.output
+    }
+}
+loom {
+    runs {
+        smokeClient {
+            client()
+            source sourceSets.smoke
+            runDir 'run-smoke'
+            vmArg '-Dscoreboardtweaks.smoke=true'
+        }
+    }
+    mods {
+        scoreboardtweaks { sourceSet sourceSets.main }
+        scoreboardtweaks_smoke { sourceSet sourceSets.smoke }
+    }
+}

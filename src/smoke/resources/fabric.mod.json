@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "id": "scoreboardtweaks_smoke",
+  "version": "1.0.0",
+  "name": "Scoreboard Tweaks development smoke test",
+  "environment": "client",
+  "entrypoints": {"client": ["dev.scoreboardtweaks.smoke.ClientSmoke"]},
+  "mixins": ["scoreboardtweaks-smoke.mixins.json"],
+  "depends": {"scoreboardtweaks": "*", "minecraft": "1.21.4"}
+}
